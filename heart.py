@@ -1,0 +1,46 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import matplotlib
+
+matplotlib.use('TkAgg')
+
+# Создание фигуры
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.set_xlim(-20, 20)
+ax.set_ylim(-18, 18)
+ax.set_aspect('equal')
+ax.set_facecolor('black')
+fig.patch.set_facecolor('black')
+
+# Добавляем координатную сетку (граф)
+ax.grid(True, color='white', alpha=0.3, linestyle='-', linewidth=0.5)
+ax.spines['bottom'].set_color('white')
+ax.spines['top'].set_color('white')
+ax.spines['left'].set_color('white')
+ax.spines['right'].set_color('white')
+ax.tick_params(axis='x', colors='white', labelsize=10)
+ax.tick_params(axis='y', colors='white', labelsize=10)
+ax.set_xlabel('X', color='white', fontsize=12)
+ax.set_ylabel('Y', color='white', fontsize=12)
+
+# Параметрическое уравнение сердца
+t = np.linspace(0, 2*np.pi, 100)
+x = 16 * np.sin(t)**3
+y = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)
+
+# Создаем сердце
+heart, = ax.plot(x, y, color='red', linewidth=4)
+
+def animate(frame):
+    scale = 1 + 0.1 * np.sin(frame * 0.2)
+    heart.set_data(x * scale, y * scale)
+    intensity = 0.7 + 0.3 * np.sin(frame * 0.3)
+    heart.set_color((1, intensity, intensity))
+    heart.set_linewidth(3 + 2 * np.sin(frame * 0.5))
+    return heart,
+
+anim = FuncAnimation(fig, animate, frames=200, interval=50, blit=True)
+
+plt.title("Пульсирующее сердце на графе", color='white', fontsize=16)
+plt.show()
