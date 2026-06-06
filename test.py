@@ -19,7 +19,12 @@ if not is_admin():
 def show_menu():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("=====================================")
-    print("         ＬＡＭＢｏᅠｌｅｇａ  ОПТИМИЗАТОР        ")
+    print("        ＬＡＭＢｏᅠｌｅｇａ  ОПТИМИЗАТОР        ")
+    print("=====================================")
+    print("  ПОДПИШИСЬ НЕ ЗАБУДЬ!!!!!           ")
+    print("  TikTok: lambo_lega444              ")
+    print("  Telegram: lambo_lega444            ")
+    print("  YouTube: lambo_lega444             ")
     print("=====================================")
     print("[1] Отключить Xbox Game Bar")
     print("[2] Включить игровой режим")
@@ -39,6 +44,11 @@ def show_menu():
     print("[16] Ускорение запуска Windows")
     print("[17] Включить HAGS")
     print("[18] Сброс системы (SFC Scannow)")
+    print("[19] Отключить залипание клавиш (Shift)")
+    print("[20] Оптимизация полноэкранных игр (FSO)")
+    print("[21] Очистить кэш DNS (Снижение пинга)")
+    print("[22] Отключить отчеты об ошибках (WerSvc)")
+    print("[23] Полная очистка корзины")
     print("[0] Выход")
     print("-------------------------------------")
 
@@ -164,6 +174,37 @@ while True:
         print("Запуск проверки системных файлов...")
         subprocess.run("sfc /scannow", shell=True)
         input("Проверка завершена. Нажмите Enter...")
+
+    elif choice == "19":
+        print("Отключение залипания клавиш...")
+        run_cmd('reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "506" /f')
+        print("Готово!")
+        os.system("timeout /t 2 >nul")
+
+    elif choice == "20":
+        print("Оптимизация полноэкранных игр (FSO)...")
+        run_cmd('reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d 2 /f')
+        print("Готово!")
+        os.system("timeout /t 2 >nul")
+
+    elif choice == "21":
+        print("Очистка кэша DNS...")
+        run_cmd("ipconfig /flushdns")
+        print("Сетевой кэш успешно сброшен!")
+        os.system("timeout /t 2 >nul")
+
+    elif choice == "22":
+        print("Отключение службы отчетов об ошибках Windows...")
+        run_cmd("sc config WerSvc start= disabled")
+        run_cmd("sc stop WerSvc")
+        print("Готово!")
+        os.system("timeout /t 2 >nul")
+
+    elif choice == "23":
+        print("Очистка корзины...")
+        run_ps("Clear-RecycleBin -Force -ErrorAction SilentlyContinue")
+        print("Корзина очищена!")
+        os.system("timeout /t 2 >nul")
 
     elif choice == "0":
         print("Выход...")
